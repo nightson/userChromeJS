@@ -6,7 +6,7 @@
 // @include        chrome://browser/content/browser.xul
 // ==/UserScript==
 (function () {
-	var overwrite = 0,//设置恢复会话时是否覆盖已打开的页面，0为不覆盖，1为覆盖，2为不覆盖且在新窗口恢复会话
+	var overwrite = 2,//设置恢复会话时是否覆盖已打开的页面，0为不覆盖，1为覆盖，2为不覆盖且在新窗口恢复会话
 		Cc = Components.classes,
 		Ci = Components.interfaces,
 		Cu = Components.utils,
@@ -65,18 +65,20 @@
 	//保存会话
 	function saveSession(ssdata) {
 		var name = prompt("Save as", getTime());
-		if (loadFile() === false) {
-			var data = {};
-		} else {
-			var data = loadFile();
+		if (name != null) {
+			if (loadFile() === false) {
+				var data = {};
+			} else {
+				var data = loadFile();
+			}
+			if (data[name]) {
+				alert("A session with the same name already exists")
+				return;
+			}
+			data[name] = JSON.parse(ssdata);
+			saveFile(JSON.stringify(data));
+			makeitems(name);
 		}
-		if (data[name]) {
-			alert("A session with the same name already exists")
-			return;
-		}
-		data[name] = JSON.parse(ssdata);
-		saveFile(JSON.stringify(data));
-		makeitems(name);
 	}
 
 	//保存所有窗口会话
