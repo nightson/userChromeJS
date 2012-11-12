@@ -51,9 +51,9 @@
         border-radius: 3px!important;
     }
 
-    scrollbar thumb: active,
-    scrollbar thumb: hover {
-        background-color: #9B9B9B !important;
+    scrollbar thumb:active,
+    scrollbar thumb:hover {
+        background-color: #9B9B9B!important;
     }
 
     scrollbar scrollbarbutton, scrollbar gripper {
