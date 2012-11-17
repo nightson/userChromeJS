@@ -17,7 +17,7 @@
 
     var css = <![CDATA[
     @namespace url(http: //www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
-    scrollbar {
+    :not(select) > scrollbar {
         -moz-appearance: none!important;
         position: relative;
         background-color: transparent;
@@ -26,39 +26,40 @@
         padding: 2px;
     }
 
-    scrollbar[orient = "vertical"] {
+    :not(select) > scrollbar[orient = "vertical"] {
         -moz-margin-start: -10px;
         min-width: 10px;
     }
 
-    scrollbar[orient = "vertical"] thumb {
+    :not(select) > scrollbar[orient = "vertical"] thumb {
         min-height: 20px;
     }
 
-    scrollbar[orient = "horizontal"] {
+   :not(select) > scrollbar[orient = "horizontal"] {
         margin-top: -10px;
         min-height: 10px;
     }
 
-    scrollbar[orient = "horizontal"] thumb {
+    :not(select) > scrollbar[orient = "horizontal"] thumb {
         min-width: 20px;
     }
 
-    scrollbar thumb {
+    :not(select) > scrollbar thumb {
         -moz-appearance: none!important;
         border-width: 0px!important;
         background-color: rgba(0, 0, 0, 0.2)!important;
         border-radius: 3px!important;
     }
 
-    scrollbar thumb:active,
-    scrollbar thumb:hover {
+    :not(select) > scrollbar thumb:active,
+    :not(select) > scrollbar thumb:hover {
         background-color: #9B9B9B!important;
     }
 
-    scrollbar scrollbarbutton, scrollbar gripper {
-      display: none;
+    :not(select) > scrollbar scrollbarbutton, :not(select) > scrollbar gripper {
+        display: none;
     }
+
   ]]>.toString();
 
   
