@@ -2,9 +2,11 @@
 // @name           FloatingScrollbar.uc.js
 // @namespace      nightson1988@gmail.com
 // @include        main
-// @version        0.0.1
-// @note           Thanks to Griever(https://github.com/Griever/userChromeJS/blob/master/SmartScrollbar.uc.js) and Paul Rouget(https://gist.github.com/4003205) 
+// @version        0.0.2
+// @note           Thanks to Griever(https://github.com/Griever/userChromeJS/blob/master/SmartScrollbar.uc.js) and Paul Rouget(https://gist.github.com/4003205)
+// @note           0.0.2 Remove usage of E4X (https://bugzilla.mozilla.org/show_bug.cgi?id=788293)
 // ==/UserScript==
+
 (function () {
     var prefs = Services.prefs,
         enabled;
@@ -15,54 +17,44 @@
         enabled = true;
     }
 
-    var css = <![CDATA[
-    @namespace url(http: //www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
-    :not(select) > scrollbar {
-        -moz-appearance: none!important;
-        position: relative;
-        background-color: transparent;
-        background-image: none;
-        z-index: 2147483647;
-        padding: 2px;
-    }
+    var css = '\
+    @namespace url(http: //www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\
+    :not(select) > scrollbar {\
+        -moz-appearance: none!important;\
+        position: relative;\
+        background-color: transparent;\
+        background-image: none;\
+        z-index: 2147483647;\
+        padding: 2px;\
+    }\
+    :not(select) > scrollbar[orient = "vertical"] {\
+        -moz-margin-start: -10px;\
+        min-width: 10px;\
+    }\
+    :not(select) > scrollbar[orient = "vertical"] thumb {\
+        min-height: 20px;\
+    }\
+   :not(select) > scrollbar[orient = "horizontal"] {\
+        margin-top: -10px;\
+        min-height: 10px;\
+    }\
+    :not(select) > scrollbar[orient = "horizontal"] thumb {\
+        min-width: 20px;\
+    }\
+    :not(select) > scrollbar thumb {\
+        -moz-appearance: none!important;\
+        border-width: 0px!important;\
+        border-radius: 3px!important;\
+        background-color: rgba(0, 0, 0, 0.2)!important;\
+    }\
+    :not(select) > scrollbar thumb:active,\
+    :not(select) > scrollbar thumb:hover {\
+        background-color: #9B9B9B!important;\
+    }\
+    :not(select) > scrollbar scrollbarbutton, :not(select) > scrollbar gripper {\
+        display: none;\
+    }';
 
-    :not(select) > scrollbar[orient = "vertical"] {
-        -moz-margin-start: -10px;
-        min-width: 10px;
-    }
-
-    :not(select) > scrollbar[orient = "vertical"] thumb {
-        min-height: 20px;
-    }
-
-   :not(select) > scrollbar[orient = "horizontal"] {
-        margin-top: -10px;
-        min-height: 10px;
-    }
-
-    :not(select) > scrollbar[orient = "horizontal"] thumb {
-        min-width: 20px;
-    }
-
-    :not(select) > scrollbar thumb {
-        -moz-appearance: none!important;
-        border-width: 0px!important;
-        background-color: rgba(0, 0, 0, 0.2)!important;
-        border-radius: 3px!important;
-    }
-
-    :not(select) > scrollbar thumb:active,
-    :not(select) > scrollbar thumb:hover {
-        background-color: #9B9B9B!important;
-    }
-
-    :not(select) > scrollbar scrollbarbutton, :not(select) > scrollbar gripper {
-        display: none;
-    }
-
-  ]]>.toString();
-
-  
     var sss = Cc['@mozilla.org/content/style-sheet-service;1'].getService(Ci.nsIStyleSheetService);
     var uri = makeURI('data:text/css;charset=UTF=8,' + encodeURIComponent(css));
 
@@ -92,8 +84,9 @@
 
         let root = document.documentElement;
         let display = root.style.display;
-        root.style.display = "none";
+        root.style.display = 'none';
         window.getComputedStyle(root).display; // Flush
         root.style.display = display;
     }
+
 })();
