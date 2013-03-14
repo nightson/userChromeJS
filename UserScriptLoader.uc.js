@@ -5,7 +5,8 @@
 // @include        main
 // @compatibility  Firefox 5.0
 // @license        MIT License
-// @version        0.1.8.0
+// @version        0.1.8.1
+// @note           0.1.8.1 Save Script が機能していないのを修正
 // @note           0.1.8.0 Remove E4X
 // @note           0.1.8.0 @match, @unmatch に超テキトーに対応
 // @note           0.1.8.0 .tld を Scriptish を参考にテキトーに改善
@@ -692,7 +693,7 @@ USL.createMenuitem = function () {
         m.setAttribute("class", "UserScriptLoader-item");
         m.setAttribute('checked', !script.disabled);
         m.setAttribute('type', 'checkbox');
-        m.setAttribute('oncommand', 'this.script.disabled = !this.script.disabled;BrowserReload();');
+        m.setAttribute('oncommand', 'this.script.disabled = !this.script.disabled;');
         m.script = script;
         USL.popup.insertBefore(m, USL.menuseparator);
     });
@@ -773,8 +774,11 @@ USL.saveScript = function() {
 
             var wbp = Cc["@mozilla.org/embedding/browser/nsWebBrowserPersist;1"].createInstance(Ci.nsIWebBrowserPersist);
             wbp.persistFlags = wbp.PERSIST_FLAGS_AUTODETECT_APPLY_CONVERSION;
-            var uri = makeURI(win.location.href);
-            wbp.saveURI(uri, null, null, null, null, fp.file, null);
+            var uri = doc.documentURIObject;
+            var loadContext = win.QueryInterface(Ci.nsIInterfaceRequestor)
+                .getInterface(Ci.nsIWebNavigation)
+                .QueryInterface(Ci.nsILoadContext);
+            wbp.saveURI(uri, null, uri, null, null, fp.file, loadContext);
         }
     }
     fp.open(callbackObj);
@@ -817,7 +821,7 @@ USL.onPopupShowing = function(event) {
                 menuitem.style.fontWeight = index_run !== -1 ? "bold" : "";
                 menuitem.hidden = USL.HIDE_EXCLUDE && index_match === -1;
             });
-            USL.saveMenu.hidden = win.document.contentType.indexOf("javascript") === -1;
+            USL.saveMenu.hidden = !(/\.user\.js$/.test(win.document.location.href) && /javascript|plain/.test(win.document.contentType));
             b:if (win.USL_registerCommands) {
                 for (let n in win.USL_registerCommands) {
                     USL.registMenu.disabled = false;
