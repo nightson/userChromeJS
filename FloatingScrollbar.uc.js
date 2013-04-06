@@ -2,8 +2,9 @@
 // @name           FloatingScrollbar.uc.js
 // @namespace      nightson1988@gmail.com
 // @include        main
-// @version        0.0.2
+// @version        0.0.3
 // @note           Thanks to Griever(https://github.com/Griever/userChromeJS/blob/master/SmartScrollbar.uc.js) and Paul Rouget(https://gist.github.com/4003205)
+// @note...........0.0.3 Fixed a problem of breaking hbox layout 
 // @note           0.0.2 Remove usage of E4X (https://bugzilla.mozilla.org/show_bug.cgi?id=788293)
 // ==/UserScript==
 
@@ -19,7 +20,7 @@
 
     var css = '\
     @namespace url(http: //www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);\
-    :not(select) > scrollbar {\
+    :not(select):not(hbox) > scrollbar {\
         -moz-appearance: none!important;\
         position: relative;\
         background-color: transparent;\
@@ -27,31 +28,31 @@
         z-index: 2147483647;\
         padding: 2px;\
     }\
-    :not(select) > scrollbar[orient = "vertical"] {\
+    :not(select):not(hbox) > scrollbar[orient = "vertical"] {\
         -moz-margin-start: -10px;\
         min-width: 10px;\
     }\
-    :not(select) > scrollbar[orient = "vertical"] thumb {\
+    :not(select):not(hbox) > scrollbar[orient = "vertical"] thumb {\
         min-height: 20px;\
     }\
-   :not(select) > scrollbar[orient = "horizontal"] {\
+   :not(select):not(hbox) > scrollbar[orient = "horizontal"] {\
         margin-top: -10px;\
         min-height: 10px;\
     }\
-    :not(select) > scrollbar[orient = "horizontal"] thumb {\
+    :not(select):not(hbox) > scrollbar[orient = "horizontal"] thumb {\
         min-width: 20px;\
     }\
-    :not(select) > scrollbar thumb {\
+    :not(select):not(hbox) > scrollbar thumb {\
         -moz-appearance: none!important;\
         border-width: 0px!important;\
         border-radius: 3px!important;\
         background-color: rgba(0, 0, 0, 0.2)!important;\
     }\
-    :not(select) > scrollbar thumb:active,\
-    :not(select) > scrollbar thumb:hover {\
+    :not(select):not(hbox) > scrollbar thumb:active,\
+    :not(select):not(hbox) > scrollbar thumb:hover {\
         background-color: #9B9B9B!important;\
     }\
-    :not(select) > scrollbar scrollbarbutton, :not(select) > scrollbar gripper {\
+    :not(select):not(hbox) > scrollbar scrollbarbutton, :not(select):not(hbox) > scrollbar gripper {\
         display: none;\
     }';
 
