@@ -2,7 +2,8 @@
 // @name           ScratchPadMod.uc.js
 // @description    Let you choose which XULWindow to run your code in. Please set devtools.chrome.enabled to true before using this script.
 // @namespace      https://github.com/nightson
-// @include        chrome://browser/content/scratchpad.xul
+// @include        chrome://devtools/content/scratchpad/scratchpad.xul
+// @version        0.0.2 fix minor bugs
 // @version        0.0.1
 // ==/UserScript==
 
